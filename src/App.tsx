@@ -55,6 +55,8 @@ function App() {
     getBalance();
   }, [address, signer]);
 
+  useEffect(() => {});
+
   return (
     <>
       <div>GOERLI BALANCE CHECKER</div>
@@ -63,6 +65,22 @@ function App() {
         <>
           <div>address: {address}</div>
           <div>DaiBalance: {daiBalance}</div>
+          <Button
+            onClick={async () => {
+              const daiContract = new ethers.Contract(
+                DAIAddress,
+                ERC20Abi,
+                signer
+              );
+
+              await daiContract.transfer(
+                "0x1eDB885a6F2cB58A95C5bc5E35404aC6A4e9965e",
+                "1"
+              );
+            }}
+          >
+            Transfer
+          </Button>
         </>
       ) : (
         <Button onClick={async () => setInstance(await web3Modal.connect())}>
